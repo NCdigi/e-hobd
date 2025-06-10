@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>e-HBD - Bible Doctrines</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <main class="main-content">
+      <header class="header">
+        <h1 id="lesson-title"></h1>
+        <select id="language-switcher">
+          <option value="en">English</option>
+          <option value="fr">Français</option>
+          <option value="pt">Português</option>
+          <option value="sh">Shona</option>
+        </select>
+      </header>
+
+      <section class="sabbath-block" style="display:none;">
+        <h2>Sabbath Afternoon</h2>
+        <p id="sabbath-intro"></p>
+
+        <div class="memory-verse">
+          <h3>Memory Verse</h3>
+          <p id="memory-verse"></p>
+        </div>
+
+        <div class="fundamental-belief q1">
+          <h3>Fundamental Belief</h3>
+          <p id="fundamental-belief"></p>
+        </div>
+
+        <div class="key-thought">
+          <h3>Key Thought</h3>
+          <p id="key-thought"></p>
+        </div>
+
+        <div class="introduction">
+          <h3>Introduction</h3>
+          <p id="introduction"></p>
+        </div>
+
+        <div id="sabbath-questions"></div>
+      </section>
+
+      <div id="day-content"></div>
+
+      <section class="media" style="display:none;">
+        <h2>Watch / Listen</h2>
+        <audio id="audio-player" controls></audio>
+        <video id="video-player" controls width="100%"></video>
+      </section>
+
+      <div class="day-nav" style="display:none;">
+        <button id="prev-day">◀ Previous</button>
+        <button id="next-day">Next ▶</button>
+      </div>
+
+      <footer class="footer">
+        <p>© 2025 e-Handbook of Bible Doctrines</p>
+      </footer>
+    </main>
+
+    <div class="logo-column">
+      <img src="logo.png" alt="Seventh-day Adventist Logo" class="logo" />
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

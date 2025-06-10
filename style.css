@@ -1,0 +1,190 @@
+:root {
+  --primary-brown: #795548;
+  --light-brown: #d7ccc8;
+  --q1-bg: #fff3e0;
+  --note-bg: #fffde7;
+  --bg-color: #fffaf7;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: sans-serif;
+  background-color: var(--bg-color);
+  color: #333;
+}
+
+.app {
+  display: grid;
+  grid-template-columns: 1fr 60px;
+  min-height: 100vh;
+}
+
+.main-content {
+  padding: 1rem;
+  margin-right: 60px;
+}
+
+/* Center the logo horizontally in its column */
+
+.logo-column {
+  position: fixed;
+  top: 0;
+  right: 8px;
+  width: 56px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 1rem;
+  background-color: transparent;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+/* Only center the top selected titles */
+.sabbath-block h2,
+.fundamental-belief.q1 h3,
+#sabbath-questions,
+.question,
+.introduction h3 {
+  text-align: center;
+  color: var(--primary-brown);
+}
+
+/* Optional: Add spacing and visual weight to final question*/
+.sabbath-reflective-question {
+  margin-top: 1rem;
+  text-align: center;
+  font-weight: bold;
+  padding-left: 1rem;
+  font-size: 1.05rem;
+  color: var(--primary-brown);
+}
+
+section {
+  margin-top: 1.25rem;
+  padding: 1rem;
+  border-radius: 8px;
+  background-color: #fefcf9;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.05);
+}
+
+section h2,
+section h3 {
+  color: var(--primary-brown);
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.fundamental-belief.q1 p {
+  background-color: var(--q1-bg);
+  border-left: 5px solid #ff9800;
+  padding: 0.75rem;
+  border-radius: 6px;
+}
+
+.memory-verse p {
+  font-style: italic;
+  color: #444;
+  background-color: #fff4e6;
+  padding: 0.5rem;
+  border-left: 4px solid var(--primary-brown);
+  border-radius: 4px;
+}
+
+.key-thought p {
+  background-color: #f0e6e2;
+  font-style: italic;
+  border-left: 4px solid var(--primary-brown);
+  padding: 0.75rem;
+}
+
+/*Notes styling*/
+.notes textarea {
+  width: 100%;
+  height: 6rem;
+  margin-top: 0.5rem;
+  padding: 0.75rem;
+  border: 1px dashed #bbb;
+  border-radius: 0.5rem;
+  font-size: 0.95rem;
+  background-color: #fdf8f3;
+}
+
+/* Scripture note under questions */
+.scripture {
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+.day-title {
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-top: 2rem;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 0.25rem;
+  text-transform: uppercase;
+}
+
+.question-block {
+  margin-top: 1rem;
+  background-color: #fcfcfc;
+  border-left: 4px solid #ccc;
+  padding: 0.75rem;
+  border-radius: 6px;
+}
+
+.question-block textarea {
+  width: 100%;
+  height: 4rem;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+}
+
+.author-note {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  background-color: var(--note-bg);
+  padding: 0.5rem;
+  border-left: 4px solid #ffa000;
+}
+
+.day-nav {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+}
+
+.day-nav button {
+  background-color: var(--primary-brown);
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.day-nav button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.reflective-question p {
+  font-weight: bold;
+  font-style: italic;
+  color: #5d4037;
+}

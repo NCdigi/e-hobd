@@ -1,0 +1,23 @@
+{
+  "sabbathAfternoon": "Sabbath Afternoon",
+  "memoryVerse": "Memory Verse",
+  "fundamentalBelief": "Fundamental Belief",
+  "keyThought": "Key Thought",
+  "introduction": "Introduction",
+  "generalReview": "General Review",
+  "watchListen": "Watch / Listen to the Summary",
+  "writeThoughts": "Write your thoughts here...",
+  "reflectPrompt": "Reflect and write your thoughts here...",
+  "reviewPrompt": "Write your thoughts for the week's lesson...",
+  "prev": "◀ Previous",
+  "next": "Next ▶",
+  "dayNames": {
+    "sabbath afternoon": "Sabbath Afternoon",
+    "sunday": "Sunday",
+    "monday": "Monday",
+    "tuesday": "Tuesday",
+    "wednesday": "Wednesday",
+    "thursday": "Thursday",
+    "friday": "Friday"
+  }
+}
