@@ -1,0 +1,29 @@
+name: e-HoBD Static CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: ✅ Checkout code
+        uses: actions/checkout@v3
+
+      - name: 🧰 Setup Node.js for GitHub
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: 📦 Install ESLint & Stylelint
+        run: |
+          npm install --no-save eslint stylelint stylelint-config-standard
+
+      - name: 🧪 Run ESLint
+        run: npx eslint "**/*.js" || true
+
+      - name: 🎨 Run Stylelint
+        run: npx stylelint "**/*.css" || true
