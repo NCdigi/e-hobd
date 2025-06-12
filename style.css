@@ -1,3 +1,4 @@
+/* CSS for the Bible Study App
 :root {
   --primary-brown: #795548;
   --light-brown: #d7ccc8;
@@ -29,7 +30,7 @@ body {
   margin-right: 60px;
 }
 
-/* Center the logo horizontally in its column */
+/* Center the logo horizontally in its column *
 
 .logo-column {
   position: fixed;
@@ -51,7 +52,7 @@ body {
   object-fit: contain;
 }
 
-/* Only center the top selected titles */
+/* Only center the top selected titles *
 .sabbath-block h2,
 .fundamental-belief.q1 h3,
 #sabbath-questions,
@@ -61,7 +62,7 @@ body {
   color: var(--primary-brown);
 }
 
-/* Optional: Add spacing and visual weight to final question*/
+/* Optional: Add spacing and visual weight to final question
 .sabbath-reflective-question {
   margin-top: 1rem;
   text-align: center;
@@ -109,7 +110,7 @@ section h3 {
   padding: 0.75rem;
 }
 
-/*Notes styling*/
+/*Notes styling
 .notes textarea {
   width: 100%;
   height: 6rem;
@@ -121,7 +122,7 @@ section h3 {
   background-color: #fdf8f3;
 }
 
-/* Scripture note under questions */
+/* Scripture note under questions
 .scripture {
   font-size: 0.85rem;
   color: #666;
@@ -187,4 +188,330 @@ section h3 {
   font-weight: bold;
   font-style: italic;
   color: #5d4037;
+}
+*/
+
+/* CSS for the Bible Study App */
+:root {
+  --primary-brown: #795548;
+  --light-brown: #d7ccc8;
+  --q1-bg: #fff3e0;
+  --note-bg: #fffde7;
+  --bg-color: #fffaf7;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background-color: var(--bg-color);
+  color: #333;
+}
+
+/* Layout */
+.app {
+  display: flex;
+  flex-direction: row;
+}
+
+/* Main content */
+.main-content {
+  flex: 1;
+  padding: 1rem;
+  max-width: calc(100vw - 60px);
+  box-sizing: border-box;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.2rem 1rem;
+  background-color: transparent;
+  z-index: 10;
+}
+
+#lesson-title {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #4e342e;
+  margin: 0;
+  flex-grow: 1;
+  text-align: left;
+}
+
+#sidebar-toggle {
+  font-size: 2rem;
+  background: none;
+  border: none;
+  color: #6d4c41;
+  cursor: pointer;
+  margin-left: auto;
+  padding: 0.3rem 1rem;
+}
+
+#sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5) url("images/hobd.png") no-repeat center 30%;
+  background-size: cover;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 997;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.sidebar.open ~ #sidebar-overlay {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#language-switcher {
+  font-size: 1rem;
+  padding: 0.25rem;
+}
+
+/* Sections */
+section {
+  margin: 1.5rem 0;
+}
+
+section h2,
+section h3 {
+  background-color: #efebe9;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+}
+
+/* Questions */
+.question-block {
+  margin-bottom: 1.5rem;
+}
+
+.question-block textarea {
+  width: 100%;
+  height: 80px;
+  font-family: inherit;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 0.5rem;
+}
+
+.author-note {
+  background-color: #f1e7e2;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  font-style: italic;
+  font-size: 0.95rem;
+  border-left: 4px solid #8d6e63;
+}
+
+.day-title {
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-top: 2rem;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 0.25rem;
+  text-transform: uppercase;
+}
+
+/* Media */
+.media {
+  margin-top: 2rem;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  font-size: 0.85rem;
+  color: #6d4c41;
+}
+
+/* Navigation buttons */
+.day-nav {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+
+.day-nav button {
+  background: #6d4c41;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.25rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.day-nav button:disabled {
+  background-color: #a1887f;
+  cursor: not-allowed;
+}
+
+/* Logo column */
+.logo-column {
+  width: 60px;
+  height: 100vh;
+  background-color: transparent;
+  position: fixed;
+  right: 0;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 1rem;
+}
+
+.logo {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+
+/* Only center the top selected titles */
+.sabbath-afternoon,
+.fundamental-belief,
+#sabbath-questions,
+.question,
+.reflective-question p,
+.introduction {
+  text-align: center;
+  color: var(--primary-brown);
+}
+
+section h2,
+section h3 {
+  color: var(--primary-brown);
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.fundamental-belief.q1 p {
+  background-color: var(--q1-bg);
+  border-left: 5px solid #ff9800;
+  padding: 0.75rem;
+  border-radius: 6px;
+}
+
+.memory-verse p {
+  font-style: italic;
+  color: #444;
+  background-color: #fff4e6;
+  padding: 0.5rem;
+  border-left: 4px solid var(--primary-brown);
+  border-radius: 4px;
+}
+
+.key-thought p {
+  background-color: #f0e6e2;
+  font-style: italic;
+  border-left: 4px solid var(--primary-brown);
+  padding: 0.75rem;
+}
+
+/*Notes styling*/
+.notes textarea {
+  width: 100%;
+  height: 6rem;
+  margin-top: 0.5rem;
+  padding: 0.75rem;
+  border: 1px dashed #bbb;
+  border-radius: 0.5rem;
+  font-size: 0.95rem;
+  background-color: #fdf8f3;
+}
+
+/* Scripture note under questions*/
+.scripture {
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+/* Sidebar */
+.sidebar {
+  height: 100%;
+  width: 200px;
+  position: fixed;
+  top: 0;
+  left: -200px;
+  background-color: #efebe9;
+  overflow-x: hidden;
+  padding-top: 2rem;
+  box-shadow: 2px 0 4px rgba(0, 0, 0, 0.2);
+  transition: 0.3s ease-in-out;
+  z-index: 998;
+}
+
+.sidebar.open {
+  left: 0;
+}
+
+.sidebar a {
+  padding: 0.75rem 1rem;
+  display: block;
+  color: #4e342e;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.sidebar a:hover {
+  background-color: #d7ccc8;
+}
+
+/* Presentation mode */
+body.presentation-mode .question-block textarea,
+body.presentation-mode .day-nav,
+body.presentation-mode #menu-toggle,
+body.presentation-mode .sidebar,
+body.presentation-mode footer {
+  display: none !important;
+}
+
+body.presentation-mode .question-block {
+  font-size: 1.25rem;
+  line-height: 1.6;
+}
+
+body.presentation-mode .question-text {
+  font-weight: bold;
+  font-size: 1.4rem;
+  text-align: center;
+}
+
+.presenter-controls {
+  display: none;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.presenter-controls button {
+  background-color: #4e342e;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+}
+
+body.presentation-mode .presenter-controls {
+  display: flex;
 }

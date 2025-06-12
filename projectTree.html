@@ -1,0 +1,47 @@
+📁 e-HBD/
+│
+├── 📄 index.html              ← Lesson Viewer (used after splash/quarter)
+├── 📄 splash.html             ← App entry point with animation
+├── 📄 landing.html            ← Quarter selection
+├── 📄 quarter.html            ← Quarter intro + start button
+├── 📄 legal.html              ← Copyright page
+│
+├── 📄 style.css               ← Shared styles
+├── 📄 app.js                  ← Core app logic for lesson display
+│
+├── 📁 ui/                     ← Interface strings (i18n)
+│   ├── en.json
+│   ├── fr.json
+│   ├── pt.json
+│   └── sh.json
+│
+├── 📁 content/
+│   ├── 📁 en/
+│   │   ├── 📁 lesson-01/
+│   │   │   ├── day-1.json
+│   │   │   ├── day-2.json
+│   │   │   ├── ... up to day-7.json
+│   │   ├── 📁 lesson-02/ ...
+│   │   ├── 📁 intro-q1/
+│   │   │   └── index.json      ← Quarter intro content
+│   │   └── 📁 legal/
+│   │       └── copyright.json
+│   ├── 📁 fr/
+│   ├── 📁 pt/
+│   └── 📁 sh/
+│
+├── 📁 media/
+│   ├── en/lesson-01/day-7.mp3
+│   └── en/lesson-01/day-7.mp4
+│
+├── 📁 images/
+│   └── logo.png
+
+
+| Page           | Purpose                                                                     | Loads                                             |
+| -------------- | --------------------------------------------------------------------------- | ------------------------------------------------- |
+| `splash.html`  | App startup + animation                                                     | → `landing.html` after 3.5s                       |
+| `landing.html` | Language & Quarter chooser                                                  | → `quarter.html?q=1&lang=en`                      |
+| `quarter.html` | Intro for Q1-Q4 (from JSON)                                                 | → stores progress → `index.html`                  |
+| `index.html`   | Loads `app.js` and reads `localStorage.e-hbd.progress` to render the lesson |                                                   |
+| `legal.html`   | Markdown-rendered copyright page                                            | Reads from `/content/<lang>/legal/copyright.json` |

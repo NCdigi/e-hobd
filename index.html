@@ -3,72 +3,84 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>e-HBD - Bible Doctrines</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>e-HBD</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preload" href="landing.html" as="document">
+  <style>
+    body {
+      background-color: #efebe9;
+      color: #4e342e;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      flex-direction: column;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    img {
+      width: 96px;
+      height: 96px;
+      margin-bottom: 1rem;
+      opacity: 0;
+      transform: scale(0.8);
+      animation: fadeZoom 1.5s ease-out 0.4s forwards;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      margin: 0.5rem 0 0;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: slideFade 1.5s ease-out 1s forwards;
+    }
+
+    p {
+      margin: 0.2rem 0;
+      opacity: 0;
+      animation: fadeIn 1s ease-in 2s forwards;
+    }
+
+    .credit {
+      font-size: 0.8rem;
+      color: #6d4c41;
+      margin-top: 1rem;
+    }
+
+    @keyframes fadeZoom {
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes slideFade {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+  </style>
 </head>
 <body>
-  <div class="app">
-    <main class="main-content">
-      <header class="header">
-        <h1 id="lesson-title"></h1>
-        <select id="language-switcher">
-          <option value="en">English</option>
-          <option value="fr">Français</option>
-          <option value="pt">Português</option>
-          <option value="sh">Shona</option>
-        </select>
-      </header>
+  <img src="images/logo.png" alt="e-HBD Logo" />
+  <h1>e-HBD</h1>
+  <p>Electronic Handbook of Bible Doctrines</p>
+  <p class="credit">Powered by NCDigital</p>
 
-      <section class="sabbath-block" style="display:none;">
-        <h2>Sabbath Afternoon</h2>
-        <p id="sabbath-intro"></p>
-
-        <div class="memory-verse">
-          <h3>Memory Verse</h3>
-          <p id="memory-verse"></p>
-        </div>
-
-        <div class="fundamental-belief q1">
-          <h3>Fundamental Belief</h3>
-          <p id="fundamental-belief"></p>
-        </div>
-
-        <div class="key-thought">
-          <h3>Key Thought</h3>
-          <p id="key-thought"></p>
-        </div>
-
-        <div class="introduction">
-          <h3>Introduction</h3>
-          <p id="introduction"></p>
-        </div>
-
-        <div id="sabbath-questions"></div>
-      </section>
-
-      <div id="day-content"></div>
-
-      <section class="media" style="display:none;">
-        <h2>Watch / Listen</h2>
-        <audio id="audio-player" controls></audio>
-        <video id="video-player" controls width="100%"></video>
-      </section>
-
-      <div class="day-nav" style="display:none;">
-        <button id="prev-day">◀ Previous</button>
-        <button id="next-day">Next ▶</button>
-      </div>
-
-      <footer class="footer">
-        <p>© 2025 e-Handbook of Bible Doctrines</p>
-      </footer>
-    </main>
-
-    <div class="logo-column">
-      <img src="logo.png" alt="Seventh-day Adventist Logo" class="logo" />
-    </div>
-  </div>
-
-  <script src="app.js"></script>
+  <script>
+    setTimeout(() => {
+      window.location.href = 'landing.html';
+    }, 3500);
+  </script>
 </body>
 </html>
