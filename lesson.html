@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>e-HBD - Bible Doctrines</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+  <!-- Sidebar Menu -->
+  <div class="sidebar" id="sidebar">
+    <a href="landing.html">🏠 Home</a>
+    <a href="legal.html">📜 About / Copyright</a>
+    <a href="#" onclick="togglePresentationMode()">🎥 Presentation Mode</a>
+    <a href="#" onclick="startLesson()">📖 Start Again</a>
+    <a href="#" onclick="logout()">🚪 Logout</a>
+  </div>
+
+  <!-- App Layout -->
+  <div class="app">
+    <main class="main-content">
+      <header class="header">
+        <h1 id="lesson-title">Loading...</h1>
+        <button id="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+      </header>
+
+      <!-- Sabbath Block -->
+      <div class="sabbath-block">
+        <section class="sabbath-afternoon">
+          <h2>Sabbath Afternoon</h2>
+          <div id="sabbath-intro"></div>
+        </section>
+        <section class="memory-verse">
+          <h2>Memory Verse</h2>
+          <div id="memory-verse"></div>
+        </section>
+        <section class="fundamental-belief q1">
+          <h2>Fundamental Belief</h2>
+          <div id="fundamental-belief"></div>
+        </section>
+        <section class="key-thought">
+          <h2>Key Thought</h2>
+          <div id="key-thought"></div>
+        </section>
+        <section class="introduction">
+          <h2>Introduction</h2>
+          <div id="introduction"></div>
+        </section>
+        <div id="sabbath-questions"></div>
+      </div>
+
+      <!-- Daily Content -->
+      <div id="day-content"></div>
+
+      <!-- Media -->
+      <div class="media">
+        <h3>Watch / Listen</h3>
+        <audio id="audio-player" controls></audio>
+        <video id="video-player" controls width="100%"></video>
+      </div>
+
+      <!-- Navigation -->
+      <div class="day-nav">
+        <button id="prev-day">⬅ Prev</button>
+        <button id="next-day">Next ➡</button>
+        <button id="next-lesson" style="display: none;"></button>
+
+        <!-- Presenter Mode Controls -->
+        <div id="presenter-controls" class="presenter-controls">
+          <button onclick="exitPresentation()">⤺ Exit Presenter Mode</button>
+          <button id="presenter-next" onclick="advancePresenterDay()">⏭ Next</button>
+        </div>
+      </div>
+
+      <footer class="footer">
+        <p>© 2025 e-Handbook of Bible Doctrines</p>
+      </footer>
+    </main>
+
+    <!-- Fixed 7th Column Logo -->
+    <div class="logo-column">
+      <img src="images/logo.png" alt="Logo" class="logo" />
+    </div>
+  </div>
+
+  <!-- Background overlay for sidebar -->
+  <div id="sidebar-overlay"></div>
+
+  <!-- App logic -->
+  <script src="app.js"></script>
+</body>
+</html>
