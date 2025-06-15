@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>e-HBD - Bible Doctrines</title>
-  <meta name="robots" content="noindex, nofollow">
+  <meta name="robots" content="noindex, noarchive, nofollow">
   <link rel="stylesheet" href="style.css" />
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
@@ -62,17 +62,26 @@
       </div>
 
       <!-- Navigation -->
-      <div class="day-nav">
-        <button id="prev-day">⬅ Prev</button>
-        <button id="next-day">Next ➡</button>
-        <button id="next-lesson" style="display: none;"></button>
+<div class="day-nav">
+  <button id="prev-day">⬅ Prev</button>
+  <button id="next-day">Next ➡</button>
+  <button id="next-lesson" style="display: none;"></button>
 
-        <!-- Presenter Mode Controls -->
-        <div id="presenter-controls" class="presenter-controls">
-          <button onclick="exitPresentation()">⤺ Exit Presenter Mode</button>
-          <button id="presenter-next" onclick="advancePresenterDay()">⏭ Next</button>
-        </div>
-      </div>
+  <!-- ✅ Presenter Mode Controls -->
+  <div id="presenter-controls" class="presenter-controls">
+  <div class="presenter-controls-row">
+    <button id="presenter-prev" onclick="goBackPresenterDay()">⬅ Previous</button>
+    <button id="presenter-next" onclick="advancePresenterDay()">⏭ Next</button>
+  </div>
+  <div class="presenter-controls-row">
+    <button onclick="toggleBlackout()">⬛ Black Screen</button>
+    <button onclick="toggleWhiteout()">⬜ White Screen</button>
+  </div>
+  <div class="presenter-controls-row">
+    <button onclick="exitPresentation()">⤺ Exit Presenter Mode</button>
+  </div>
+</div>
+
 
       <footer class="footer">
         <p>© 2025 e-Handbook of Bible Doctrines</p>
