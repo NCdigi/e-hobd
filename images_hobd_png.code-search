@@ -1,0 +1,9 @@
+# Query: images/hobd.png
+# ContextLines: 1
+
+1 result - 1 file
+
+style.css:
+  264    height: 100vh;
+  265:   background: rgba(0, 0, 0, 0.5) url("images/hobd.png") no-repeat center 40%;
+  266    background-size: cover;
