@@ -1,0 +1,24 @@
+# secrets and local stuff
+.env
+.env.* 
+*.pem
+*.key
+id_rsa*
+*.p12
+*.keystore
+*.jks
+*.sqlite
+*.db
+.vscode/*
+!.vscode/extensions.json
+
+# build caches / dependencies
+node_modules/
+dist/
+build/
+.next/
+.cache/
+coverage/
+__pycache__/
+venv/
+.DS_Store
