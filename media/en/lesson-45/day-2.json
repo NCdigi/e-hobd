@@ -1,0 +1,19 @@
+{
+  "day": "Sunday",
+  "entries": [
+    {
+      "number": 1,
+      "question": "Who are to inherit the earth?",
+      "userNoteLabel": "Note:",
+      "scripture": ["Matthew 5:5"],
+"authorNote": [""]
+    },
+    {
+      "number": 2,
+      "question": "How will the earth be made into a home fit for the righteous?",
+      "scripture": ["2 Peter 3:12,13"],
+      "userNoteLabel": "Note:",
+      "authorNote": [""]
+    }
+  ]
+}

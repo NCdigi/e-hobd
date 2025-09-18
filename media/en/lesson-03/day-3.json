@@ -1,0 +1,22 @@
+{
+  "day": "Monday",
+  "entries": [
+    {
+      "number": 3,
+      "question": "Does the account of creation agree with this?",
+      "userNoteLabel": "Note:",
+      "scripture": ["Genesis 1:26."],
+      "authorNote": "The use of the pronoun \"us\" indicates that there was more than one engaged in the work ofcreation. Christians believe that there were three engaged in creation for Genesis 1:2 speaks of the Spirit of God as being present also."
+    },
+    {
+        "question": "WHEN DID HE APPEAR IN THIS WORLD?"
+    },
+    {
+      "number": 4,
+      "question": "Does the Bible teach that Christ had an eternal existence?",
+      "scripture": ["Micah 5:2"],
+      "userNoteLabel": "Note:"
+    }
+      
+    ]
+  }

@@ -1,0 +1,30 @@
+{
+  "day": "Sunday",
+  "entries": [
+    {
+      "number": 1,
+      "question": "Who rules in the kingdom of men?",
+      "userNoteLabel": "Note:",
+      "scripture": ["Daniel 4:32 (last part)"],
+"authorNote": [""]
+    },
+    {
+      "number": 2,
+      "question": "By whose power do civil rulers exercise authority?",
+      "scripture": ["Romans 13:1"],
+      "userNoteLabel": "Note:",
+      "authorNote": [""]
+    },
+    {
+      "number": 3,
+      "question": "What is the purpose of civil government?",
+      "scripture": ["Romans 13:3,4"],
+      "userNoteLabel": "Note:",
+      "authorNote": [""]
+    },
+      {
+        "question": "HOW ARE CHRISTIANS TO SHOW THEIR LOYALTY TO THE GOVERNMENT?"
+      }
+    ]
+  }
+

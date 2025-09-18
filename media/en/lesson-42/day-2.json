@@ -1,0 +1,26 @@
+{
+  "day": "Sunday",
+  "entries": [
+    {
+      "number": 1,
+      "question": "What did God, through Moses, command Israel to make?",
+      "userNoteLabel": "Note:",
+      "scripture": ["Exodus 25:8"],
+"authorNote": ["The erection of this sanctuary, its arrangement, and its services were to teach men the plan of salvation"]
+    },
+    {
+      "number": 2,
+      "question": "What was in the first section, or 'Holy place'?",
+      "scripture": ["Hebrews 9:2"],
+      "userNoteLabel": "Note:",
+      "authorNote": ["The golden candlestick, whose light illuminated the sanctuary, represented Christ, the light of the world (John 8:12). The table of showbread represented Christ, the Bread of Life (John 6:33). The altar of incense was also in this apartment, and the incense represented the prayers of God’s people held by Christ."]
+    },
+    {
+      "number": 3,
+      "question": "What was in the second section, or 'Most Holy place'?",
+      "scripture": ["Exodus 26:34; Hebrews 9:3, 4"],
+      "userNoteLabel": "Note:",
+      "authorNote": ["The golden ark contained the two tables of stone upon which were written the Ten Commandments. Above the ark was the mercy seat; covered by the two cherubims. This was the place where God’s presence was revealed when He was in His sanctuary on earth. The mercy seat was between Him and the law which man had broken."]
+    }
+  ]
+}
