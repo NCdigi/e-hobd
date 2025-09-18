@@ -1,102 +1,204 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>e-HBD Landing Page</title>
+
+  <title>Handbook of Bible Doctrines | Landing Page</title>
+
   <meta name="robots" content="noindex, noarchive, nofollow">
+
   <style>
+
     body {
+
       background-color: #fdfaf6;
+
       font-family: 'Segoe UI', sans-serif;
+
       color: #4e342e;
+
       text-align: center;
+
       padding: 2rem 1rem;
+
     }
+
     .logo {
+
       width: 72px;
+
       height: 72px;
+
       margin-bottom: 1rem;
+
     }
+
     h1 {
+
       font-size: 1.75rem;
+
       margin: 0.25rem;
+
     }
+
     h2 {
+
       font-size: 1.25rem;
+
       color: #6d4c41;
+
       margin-bottom: 1.5rem;
+
     }
+
     .quarters {
+
       display: flex;
+
       flex-direction: column;
+
       gap: 1rem;
+
       max-width: 300px;
+
       margin: 0 auto 2rem;
+
     }
+
     .quarter-btn {
+
       background: #6d4c41;
+
       color: white;
+
       border: none;
+
       padding: 1rem;
+
       font-size: 1rem;
+
       border-radius: 4px;
+
       cursor: pointer;
+
     }
+
     .quarter-btn:hover {
+
       background: #5d4037;
+
     }
+
     #language-switcher {
+
       padding: 0.5rem;
+
       font-size: 1rem;
+
       margin-bottom: 2rem;
+
     }
+
     footer {
+
       font-size: 0.85rem;
+
       color: #6d4c41;
+
       margin-top: 2rem;
+
     }
+
   </style>
+
 </head>
+
 <body>
-  <img src="images/logo.png" alt="e-HBD Logo" class="logo"/>
-  <h1>e-HBD</h1>
-  <h2>Electronic Handbook of Bible Doctrines</h2>
+
+  <img src="images/hobd.png" alt="Handbook Of Bible Doctrones" class="logo"/>
+
+  <h1></h1>
+
+  <h2>Handbook of Bible Doctrines</h2>
+
+
 
   <label for="language-switcher">🌐 Language:</label>
+
   <select id="language-switcher">
+
     <option value="en">English</option>
+
     <option value="fr">Français</option>
+
     <option value="pt">Português</option>
+
     <option value="sh">Shona</option>
+
   </select>
 
+
+
   <div class="quarters">
+
     <button class="quarter-btn" onclick="goToQuarter(1)">📖 Quarter 1</button>
+
     <button class="quarter-btn" onclick="goToQuarter(2)">📖 Quarter 2</button>
+
     <button class="quarter-btn" onclick="goToQuarter(3)">📖 Quarter 3</button>
+
     <button class="quarter-btn" onclick="goToQuarter(4)">📖 Quarter 4</button>
+
   </div>
 
+
+
   <footer>
-    <a href="legal.html">📜 About / Copyright</a>
+
+    <a href="legal.html">📜 Copyright</a>
+
   </footer>
 
+
+
   <!--<p class="brand-credit">
+
   © 2025 <a href="https://ncdigital.co.za" target="_blank">NCDIGITAL</a> — Concept, Design & Development
+
 </p> -->
 
 
+
+
+
   <script>
+
     let selectedLang = "en";
 
+
+
     document.getElementById("language-switcher").addEventListener("change", function () {
+
       selectedLang = this.value;
+
     });
 
+
+
     function goToQuarter(q) {
+
       window.location.href = `quarter.html?q=${q}&lang=${selectedLang}`;
+
     }
+
   </script>
+
 </body>
+
 </html>
+

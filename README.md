@@ -1,1 +1,1 @@
-# e-hobd
+# handbook of bible doctrines

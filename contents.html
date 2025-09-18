@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Handbook of Bible Doctrines | Contents</title>
+  <meta name="robots" content="noindex, noarchive, nofollow">
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+
+<body>
+  <!-- Sidebar Menu -->
+  <div class="sidebar" id="sidebar">
+    <a href="landing.html">🏠 Home</a>
+    <a href="contents.html">📜 Contents</a>
+    <a href="preface.html">📜 Preface</a>
+    <a href="foreword.html">📜 Foreword</a>
+    <a href="quarter.html?q=1">📜 First Quarter</a>
+    <a href="quarter.html?q=2">📜 Second Quarter</a>
+    <a href="quarter.html?q=3">📜 Third Quarter</a>
+    <a href="quarter.html?q=4">📜 Fourth Quarter</a>
+    <a href="conclusion.html">📜 Conclusion</a>
+    <a href="#" onclick="togglePresentationMode()">🎥 Presentation Mode</a>
+    <a href="#" onclick="logout()">🚪 Logout</a>
+  </div>
+
+  <div class="app">
+    <main class="main-content container">
+      <header class="header">
+        <h1 id="lesson-title">Contents</h1>
+        <button id="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+      </header>
+
+      <div id="contents" class="row gy-4"></div>
+
+      <footer class="footer">
+        <p>Handbook of Bible Doctrines© 2025</p>
+      </footer>
+    </main>
+
+    <div class="logo-column">
+      <img src="images/logo.png" alt="Logo" class="logo" />
+    </div>
+  </div>
+
+  <div id="sidebar-overlay"></div>
+
+  <script>
+    const lang = localStorage.getItem("lang") || navigator.language.slice(0, 2) || "en";
+    const contentsDiv = document.getElementById("contents");
+
+    async function loadContents() {
+      try {
+        const res = await fetch(`content/${lang}/lessons.json`);
+        if (!res.ok) throw new Error("Cannot load lessons.json");
+        const lessons = await res.json();
+
+        const quarters = {
+          1: lessons.slice(0, 13),
+          2: lessons.slice(13, 26),
+          3: lessons.slice(26, 39),
+          4: lessons.slice(39, 52),
+        };
+
+        for (let q = 1; q <= 4; q++) {
+          const col = document.createElement("div");
+          col.className = "col-md-6";
+          col.innerHTML = `
+            <div class="card shadow-sm border-0" style="background-color: var(--light-brown);">
+              <div class="card-body">
+                <h4 class="card-title">Quarter ${q}</h4>
+                <ul class="list-unstyled mb-3">
+                  ${quarters[q]
+                    .map(
+                      (lesson, i) => `
+                    <li>
+                      <a href="lesson.html?lesson=${lesson.id}" class="text-decoration-none">
+                        ${lesson.title}
+                      </a>
+                    </li>`
+                    )
+                    .join("")}
+                </ul>
+                <a href="quarter.html?q=${q}" class="btn btn-sm" 
+                  style="background-color: var(--primary-brown); color: white;">
+                  View Quarter ${q}
+                </a>
+              </div>
+            </div>
+          `;
+          contentsDiv.appendChild(col);
+        }
+      } catch (err) {
+        contentsDiv.innerHTML = `<p>Error loading contents: ${err.message}</p>`;
+      }
+    }
+
+    loadContents();
+  </script>
+
+  <script src="app.js"></script>
+</body>
+</html>
