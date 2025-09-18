@@ -1,39 +1,66 @@
-// ====== Global state ======
-let currentLang = "en";
-let currentLesson = "lesson-01";
-let currentDay = 1;
-let UI = {};
-const ROOT = location.origin; // e.g., https://www.e-hobd.ncdigital.co.za
+/* ===============================
+   e-HOBD — app.js (KISS/DRY)
+   =============================== */
 
-// ====== Localization ======
+// ---------- Global state ----------
+let currentLang   = "en";
+let currentLesson = "lesson-01"; // always "lesson-XX" 2-digit
+let currentDay    = 1;
+let UI            = {};
+
+// Absolute-from-root URL helper (prevents nested path bugs)
+const ROOT = location.origin;                         // e.g. https://www.e-hobd.ncdigital.co.za
+const u    = (path) => `${ROOT}/${path.replace(/^\/+/, "")}`;  // u("content/en/...") -> absolute URL
+
+// Small builders (one source of truth)
+const uiPath      = (lang)              => u(`ui/${lang}.json`);
+const dayPath     = (lang, lesson, day) => u(`content/${lang}/${lesson}/day-${day}.json`);
+const nextDayOne  = (lang, lessonNum)   => u(`content/${lang}/lesson-${String(lessonNum).padStart(2,"0")}/day-1.json`);
+const quarterInfo = (lang, q)           => u(`content/${lang}/intro-q${q}/index.json`);
+
+
+// ---------- JSON fetch (guarded) ----------
+async function fetchJsonGuarded(url) {
+  const res = await fetch(url, { cache: "no-store" });
+  if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
+  const text = await res.text();
+  const looksJson = text.trim().startsWith("{") || text.trim().startsWith("[");
+  if (!looksJson) throw new Error(`Expected JSON, got non-JSON from ${url}. Head: ${text.slice(0,120)}`);
+  return JSON.parse(text);
+}
+
+async function probeExists(url) {
+  try {
+    const r = await fetch(url, { cache: "no-store", method: "GET" });
+    return r.ok;
+  } catch {
+    return false;
+  }
+}
+
+
+// ---------- Localization ----------
 async function loadUIStrings() {
   try {
-    const res = await fetch(`${ROOT}/ui/${currentLang}.json`, { cache: "no-store" });
-    if (!res.ok) throw new Error(`UI strings HTTP ${res.status}`);
-    const text = await res.text();
-    if (!text.trim().startsWith("{")) throw new Error("UI file is not JSON");
-    UI = JSON.parse(text);
+    UI = await fetchJsonGuarded(uiPath(currentLang));
   } catch (e) {
     console.error("UI load failed:", e);
     UI = {};
   }
 }
-function localize(key, fallback = "") {
-  return UI[key] || fallback;
-}
-function localizeDay(dayText) {
-  return UI.dayNames?.[String(dayText || "").toLowerCase()] || dayText;
-}
+const localize    = (key, fallback = "") => UI[key] ?? fallback;
+const localizeDay = (dayText) =>
+  UI.dayNames?.[String(dayText || "").toLowerCase()] || dayText;
 
-// ====== Theme ======
+
+// ---------- Theme ----------
 function applyTheme(theme) {
   document.documentElement.setAttribute("data-theme", theme);
 }
 function loadTheme() {
   const saved = localStorage.getItem("e-hbd.theme") || "system";
   if (saved === "system") {
-    const dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    applyTheme(dark ? "dark" : "light");
+    applyTheme(window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
   } else {
     applyTheme(saved);
   }
@@ -51,7 +78,8 @@ function setupThemeToggle() {
   });
 }
 
-// ====== Presenter mode ======
+
+// ---------- Presenter mode ----------
 function togglePresentationMode() {
   document.body.classList.toggle("presentation-mode");
   const pc = document.getElementById("presenter-controls");
@@ -64,56 +92,48 @@ function exitPresentation() {
 }
 function goBackPresenterDay() {
   if (currentDay > 1) {
-    currentDay--;
-    saveProgress();
-    loadLessonDay();
+    currentDay--; saveProgress(); loadLessonDay();
   } else {
     alert("You're already at the beginning of the lesson.");
   }
 }
 function advancePresenterDay() {
   if (currentDay < 7) {
-    currentDay++;
-    saveProgress();
-    loadLessonDay();
-  } else {
-    const nextLessonNumber = parseInt(currentLesson.split("-")[1], 10) + 1;
-    const nextLessonId = `lesson-${String(nextLessonNumber).padStart(2, "0")}`;
-    fetch(`${ROOT}/content/${currentLang}/${nextLessonId}/day-1.json`).then((res) => {
-      if (res.ok) {
-        currentLesson = nextLessonId;
-        currentDay = 1;
-        saveProgress();
-        loadLessonDay();
-      } else {
-        const nextQuarter = Math.ceil(nextLessonNumber / 13);
-        fetch(`${ROOT}/content/${currentLang}/intro-q${nextQuarter}/index.json`).then((r2) => {
-          if (r2.ok) {
-            window.location.href = `quarter.html?q=${nextQuarter}`;
-          } else {
-            alert("✅ End of available lessons.\nNew lessons coming soon.");
-          }
-        });
-      }
-    });
+    currentDay++; saveProgress(); loadLessonDay();
+    return;
   }
+  const nextLessonNum = parseInt(currentLesson.split("-")[1], 10) + 1;
+  const probeUrl      = nextDayOne(currentLang, nextLessonNum);
+
+  fetch(probeUrl).then(async (res) => {
+    if (res.ok) {
+      currentLesson = `lesson-${String(nextLessonNum).padStart(2,"0")}`;
+      currentDay = 1;
+      saveProgress(); loadLessonDay();
+    } else {
+      const q = Math.ceil(nextLessonNum / 13);
+      if (await probeExists(quarterInfo(currentLang, q))) {
+        location.href = `quarter.html?q=${q}`;
+      } else {
+        alert("✅ End of available lessons.\nNew lessons coming soon.");
+      }
+    }
+  });
 }
 
-// ====== Blackout / Whiteout ======
+
+// ---------- Blackout / Whiteout ----------
 function toggleBlackout() {
   document.body.classList.toggle("blackout");
-  if (document.body.classList.contains("whiteout")) {
-    document.body.classList.remove("whiteout");
-  }
+  if (document.body.classList.contains("whiteout")) document.body.classList.remove("whiteout");
 }
 function toggleWhiteout() {
   document.body.classList.toggle("whiteout");
-  if (document.body.classList.contains("blackout")) {
-    document.body.classList.remove("blackout");
-  }
+  if (document.body.classList.contains("blackout")) document.body.classList.remove("blackout");
 }
 
-// ====== Notes & Progress ======
+
+// ---------- Notes & Progress ----------
 function saveNote(key, value) {
   localStorage.setItem(`e-hbd.${key}`, value);
 }
@@ -121,80 +141,59 @@ function loadNote(key) {
   return localStorage.getItem(`e-hbd.${key}`) || "";
 }
 function saveProgress() {
-  localStorage.setItem(
-    "e-hbd.progress",
-    JSON.stringify({
-      lang: currentLang,
-      lesson: currentLesson,
-      day: currentDay,
-    })
-  );
+  localStorage.setItem("e-hbd.progress", JSON.stringify({
+    lang: currentLang,
+    lesson: currentLesson,
+    day: currentDay,
+  }));
 }
 function loadProgress() {
   try {
     const saved = JSON.parse(localStorage.getItem("e-hbd.progress") || "null");
     if (saved) {
-      currentLang = saved.lang || currentLang;
-      currentLesson = saved.lesson || currentLesson;
-      currentDay = saved.day || currentDay;
+      currentLang   = saved.lang    || currentLang;
+      currentLesson = saved.lesson  || currentLesson;
+      currentDay    = saved.day     || currentDay;
     }
-  } catch {
-    // ignore
-  }
+  } catch {/* ignore */}
 }
 
-// ====== JSON fetch guard ======
-async function fetchJsonGuarded(url) {
-  const res = await fetch(url, { cache: "no-store" });
-  if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
-  const text = await res.text();
-  const looksJson = text.trim().startsWith("{") || text.trim().startsWith("[");
-  if (!looksJson) {
-    throw new Error(
-      `Expected JSON, got non-JSON from ${url}. First 120 chars: ${text.slice(0, 120)}`
-    );
-  }
-  return JSON.parse(text);
-}
 
-// ====== Markdown helper ======
+// ---------- Markdown helper ----------
 function renderMarkdown(id, md) {
   const el = document.getElementById(id);
   if (!el) return;
-  el.innerHTML = (window.marked && typeof marked.parse === "function")
-    ? marked.parse(md || "")
-    : (md || "");
+  el.innerHTML = (window.marked?.parse) ? marked.parse(md || "") : (md || "");
 }
 
-// ====== Lesson loader ======
+
+// ---------- Lesson loader ----------
 async function loadLessonDay() {
-  const statusEl = document.getElementById("status"); // put <div id="status"></div> in HTML
+  const statusEl        = document.getElementById("status");
+  const sabbathBlock    = document.querySelector(".sabbath-block");
+  const sabbathContainer= document.getElementById("sabbath-questions");
+  const dayContent      = document.getElementById("day-content");
+  const prevBtn         = document.getElementById("prev-day");
+  const nextBtn         = document.getElementById("next-day");
+  const nextLessonBtn   = document.getElementById("next-lesson");
+  const mediaEl         = document.querySelector(".media");
+  const dayNav          = document.querySelector(".day-nav");
+
   if (statusEl) statusEl.textContent = "Loading... Please wait...";
 
   try {
     await loadUIStrings();
 
-    const url = `${ROOT}/content/${currentLang}/${currentLesson}/day-${currentDay}.json`;
-    const lesson = await fetchJsonGuarded(url);
-
+    const lesson = await fetchJsonGuarded(dayPath(currentLang, currentLesson, currentDay));
     const isSabbath = lesson.day === "Sabbath Afternoon";
-    const isFriday = lesson.day === "Friday" || lesson.day === "General Review";
+    const isFriday  = lesson.day === "Friday" || lesson.day === "General Review";
 
-    const sabbathBlock = document.querySelector(".sabbath-block");
-    const sabbathContainer = document.getElementById("sabbath-questions");
-    const dayContent = document.getElementById("day-content");
-    const prevBtn = document.getElementById("prev-day");
-    const nextBtn = document.getElementById("next-day");
-    const nextLessonBtn = document.getElementById("next-lesson");
-    const mediaEl = document.querySelector(".media");
-    const dayNav = document.querySelector(".day-nav");
-
-    if (sabbathBlock) sabbathBlock.style.display = isSabbath ? "block" : "none";
+    if (sabbathBlock)     sabbathBlock.style.display = isSabbath ? "block" : "none";
     if (sabbathContainer) sabbathContainer.innerHTML = "";
-    if (dayContent) dayContent.innerHTML = "";
-    if (mediaEl) mediaEl.style.display = "none";
-    if (dayNav) dayNav.style.display = "flex";
-    if (nextLessonBtn) nextLessonBtn.style.display = "none";
+    if (dayContent)       dayContent.innerHTML = "";
+    if (mediaEl)          mediaEl.style.display = "none";
+    if (dayNav)           dayNav.style.display = "flex";
+    if (nextLessonBtn)    nextLessonBtn.style.display = "none";
 
     if (lesson.title) {
       const t = document.getElementById("lesson-title");
@@ -213,18 +212,17 @@ async function loadLessonDay() {
     }
 
     if (isSabbath) {
-      renderMarkdown("sabbath-intro", lesson.sabbathIntro);
-      renderMarkdown("memory-verse", lesson.memoryVerse);
-      // Fallback to `statements` if `fundamentalBelief` is absent
-      renderMarkdown("fundamental-belief", lesson.fundamentalBelief || lesson.statements || "");
-      renderMarkdown("key-thought", lesson.keyThought);
-      renderMarkdown("introduction", lesson.introduction);
+      renderMarkdown("sabbath-intro",       lesson.sabbathIntro);
+      renderMarkdown("memory-verse",        lesson.memoryVerse);
+      renderMarkdown("fundamental-belief",  lesson.fundamentalBelief || lesson.statements || "");
+      renderMarkdown("key-thought",         lesson.keyThought);
+      renderMarkdown("introduction",        lesson.introduction);
 
       (lesson.sabbathQuestions || []).forEach((q) => {
         const qDiv = document.createElement("div");
         qDiv.className = "question-block reflective-question";
         qDiv.innerHTML = `<p class="question-text"><strong>${q.question || ""}</strong></p>`;
-        if (sabbathContainer) sabbathContainer.appendChild(qDiv);
+        sabbathContainer?.appendChild(qDiv);
       });
 
     } else if (isFriday) {
@@ -246,30 +244,25 @@ async function loadLessonDay() {
         `;
       }
 
-      const nextLessonNumber = parseInt(currentLesson.split("-")[1], 10) + 1;
-      const nextLessonId = `lesson-${String(nextLessonNumber).padStart(2, "0")}`;
+      const nextLessonNum = parseInt(currentLesson.split("-")[1], 10) + 1;
+      const probeUrl      = nextDayOne(currentLang, nextLessonNum);
 
-      fetch(`${ROOT}/content/${currentLang}/${nextLessonId}/day-1.json`).then((r) => {
+      fetch(probeUrl).then(async (r) => {
         if (r.ok && nextLessonBtn) {
           nextLessonBtn.style.display = "inline-block";
-          nextLessonBtn.textContent = localize("nextLesson", "Next Lesson") + " ▶";
+          nextLessonBtn.textContent   = localize("nextLesson","Next Lesson") + " ▶";
           nextLessonBtn.onclick = () => {
-            currentLesson = nextLessonId;
-            currentDay = 1;
-            saveProgress();
-            loadLessonDay();
+            currentLesson = `lesson-${String(nextLessonNum).padStart(2,"0")}`;
+            currentDay    = 1;
+            saveProgress(); loadLessonDay();
           };
         } else {
-          const nextQuarter = Math.ceil(nextLessonNumber / 13);
-          fetch(`${ROOT}/content/${currentLang}/intro-q${nextQuarter}/index.json`).then((rq) => {
-            if (rq.ok && nextLessonBtn) {
-              nextLessonBtn.style.display = "inline-block";
-              nextLessonBtn.textContent = localize("nextQuarter", "Next Quarter") + " ▶";
-              nextLessonBtn.onclick = () => {
-                window.location.href = `quarter.html?q=${nextQuarter}`;
-              };
-            }
-          });
+          const q = Math.ceil(nextLessonNum / 13);
+          if (await probeExists(quarterInfo(currentLang, q)) && nextLessonBtn) {
+            nextLessonBtn.style.display = "inline-block";
+            nextLessonBtn.textContent   = localize("nextQuarter","Next Quarter") + " ▶";
+            nextLessonBtn.onclick       = () => { location.href = `quarter.html?q=${q}`; };
+          }
         }
       });
 
@@ -306,40 +299,26 @@ async function loadLessonDay() {
   }
 }
 
-// ====== Sidebar toggle & auto-close ======
+
+// ---------- Sidebar & keyboard ----------
 function toggleSidebar() {
-  const sb = document.getElementById("sidebar");
-  if (sb) sb.classList.toggle("open");
+  document.getElementById("sidebar")?.classList.toggle("open");
 }
 document.addEventListener("click", (event) => {
   const sidebar = document.getElementById("sidebar");
   const toggleButton = document.getElementById("sidebar-toggle");
-  if (
-    sidebar &&
-    sidebar.classList.contains("open") &&
-    !sidebar.contains(event.target) &&
-    event.target !== toggleButton
-  ) {
+  if (sidebar?.classList.contains("open") &&
+      !sidebar.contains(event.target) &&
+      event.target !== toggleButton) {
     sidebar.classList.remove("open");
   }
 });
-document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll(".sidebar a").forEach((link) => {
-    link.addEventListener("click", () => {
-      const sb = document.getElementById("sidebar");
-      if (sb) sb.classList.remove("open");
-    });
-  });
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") document.body.classList.remove("blackout", "whiteout");
 });
 
-// ====== Keyboard helpers ======
-document.addEventListener("keydown", function (e) {
-  if (e.key === "Escape") {
-    document.body.classList.remove("blackout", "whiteout");
-  }
-});
 
-// ====== Boot ======
+// ---------- Boot ----------
 document.addEventListener("DOMContentLoaded", () => {
   loadProgress();
   loadTheme();
@@ -351,27 +330,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const prevBtn = document.getElementById("prev-day");
   const nextBtn = document.getElementById("next-day");
 
-  if (prevBtn) {
-    prevBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      if (currentDay > 1) {
-        currentDay--;
-        saveProgress();
-        loadLessonDay();
-      }
-    });
-  }
-  if (nextBtn) {
-    nextBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      if (currentDay < 7) {
-        currentDay++;
-        saveProgress();
-        loadLessonDay();
-      }
-    });
-  }
+  prevBtn?.addEventListener("click", (e) => {
+    e.preventDefault();
+    if (currentDay > 1) { currentDay--; saveProgress(); loadLessonDay(); }
+  });
+  nextBtn?.addEventListener("click", (e) => {
+    e.preventDefault();
+    if (currentDay < 7) { currentDay++; saveProgress(); loadLessonDay(); }
+  });
 
-  // Initial load after DOM and theme ready
   loadLessonDay();
 });
