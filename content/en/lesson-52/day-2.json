@@ -1,0 +1,19 @@
+{
+  "day": "Sunday",
+  "entries": [
+    {
+      "number": 1,
+      "question": "Relate the parable of the talents.",
+      "userNoteLabel": "Note:",
+      "scripture": ["Matthew 25:14-30"],
+"authorNote": ["The parable of the talents, rightly understood, will bar (eliminate) covetousness, which God calls idolatry.\" (CS 113).\n\n   \"The people of God should realize the fact that God has not given them talents for the purpose of enriching themselves with earthly goods, but in order that they may lay up in store a good foundation against the time to come, even for eternal life.\" (CS 117)"]
+    },
+    {
+      "number": 2,
+      "question": "Why were two of the stewards commended?",
+      "scripture": ["Matthew 25:21-23"],
+      "userNoteLabel": "Note:",
+      "authorNote": ["The talents, however few, are to be put to use. The question that most concerns us is not, How much have I received? but, What am I doing with that which I have? The development of all our powers is the first duty we owe to God and to our fellow men. No one who is not growing daily in capability and usefulness is fulfilling the purpose of life.” (COL 329)."]
+    }
+  ]
+}

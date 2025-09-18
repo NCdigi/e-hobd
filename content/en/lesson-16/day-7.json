@@ -1,0 +1,16 @@
+{
+  "day": "Friday",
+  "entries": [
+    {
+      "number": 1,
+      "question": "General Review",
+      "userNoteLabel": "Note:",
+      "scripture": [""],
+      "authorNote": ""
+    }
+  ],
+  "media": {
+    "audio": "media/en/lesson-01/day-1.mp3",
+    "video": "media/en/lesson-01/day-1.mp4"
+  }
+}
