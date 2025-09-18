@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>e-HBD</title>
+  <link rel="preload" href="landing.html" as="document">
+  <style>
+    body {
+      background-color: #efebe9;
+      color: #4e342e;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      flex-direction: column;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    img {
+      width: 96px;
+      height: 96px;
+      margin-bottom: 1rem;
+      opacity: 0;
+      transform: scale(0.8);
+      animation: fadeZoom 1.5s ease-out 0.4s forwards;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      margin: 0.5rem 0 0;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: slideFade 1.5s ease-out 1s forwards;
+    }
+
+    p {
+      margin: 0.2rem 0;
+      opacity: 0;
+      animation: fadeIn 1s ease-in 2s forwards;
+    }
+
+    .credit {
+      font-size: 0.8rem;
+      color: #6d4c41;
+      margin-top: 1rem;
+    }
+
+    @keyframes fadeZoom {
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes slideFade {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <img src="images/logo.png" alt="e-HBD Logo" />
+  <h1>e-HBD</h1>
+  <p>Electronic Handbook of Bible Doctrines</p>
+  <p class="credit">Powered by NCDigital</p>
+
+  <script>
+    setTimeout(() => {
+      window.location.href = 'landing.html';
+    }, 3500);
+  </script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quarter Intro</title>
+  <meta name="robots" content="noindex, noarchive, nofollow">
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fdfaf6;
+      color: #4e342e;
+      padding: 2rem 1rem;
+    }
+    .container {
+      max-width: 720px;
+      margin: auto;
+    }
+    h1 {
+      font-size: 1.75rem;
+      margin-bottom: 1rem;
+      color: #5d4037;
+    }
+    #quarter-content {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      white-space: pre-wrap;
+    }
+    .start-btn {
+      margin-top: 2rem;
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      background-color: #6d4c41;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 id="quarter-title">Loading...</h1>
+    <div id="quarter-content">Please wait...</div>
+    <button class="start-btn" id="start-lesson-btn">📖 Start Lesson 1</button>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const q = parseInt(params.get("q")) || 1;
+
+    // Use lang from localStorage, fallback to browser, default to en
+    let lang = localStorage.getItem("lang") || navigator.language.slice(0, 2) || "en";
+
+    // Load quarter intro content
+    fetch(`content/${lang}/intro-q${q}/index.json`)
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("quarter-title").textContent = data.title || `Quarter ${q} Introduction`;
+        document.getElementById("quarter-content").innerHTML = marked.parse(data.content || "");
+      });
+
+    // On start, calculate correct lesson number (1, 14, 27, 40)
+    document.getElementById("start-lesson-btn").onclick = () => {
+      const lessonNumber = ((q - 1) * 13 + 1).toString().padStart(2, '0'); // 01, 14, 27, 40
+      localStorage.setItem("e-hbd.progress", JSON.stringify({
+        lang: lang,
+        lesson: `lesson-${lessonNumber}`,
+        day: 1
+      }));
+      window.location.href = "lesson.html";
+    };
+  </script>
+</body>
+</html>

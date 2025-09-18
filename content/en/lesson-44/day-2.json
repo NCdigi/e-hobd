@@ -1,0 +1,26 @@
+{
+  "day": "Sunday",
+  "entries": [
+    {
+      "number": 1,
+      "question": "What happens to the wicked when Christ returns?",
+      "userNoteLabel": "Note:",
+      "scripture": ["2 Thessalonians 1:7-9"],
+"authorNote": ["There is no resurrection of the wicked, as there is for the righteous, when Christ returns. They must await “the resurrection of damnation.” (John 5:29). The wicked who die when Christ comes lie unburied on the earth and the birds of the air feed on them. (Revelation 19: 17,18)"]
+    },
+    {
+      "number": 2,
+      "question": "Why do the wicked die?",
+      "scripture": ["2 Thessalonians 2:10"],
+      "userNoteLabel": "Note:",
+      "authorNote": [""]
+    },
+    {
+      "number": 3,
+      "question": "Do sinners go directly to their punishment after death?",
+      "scripture": ["2 Peter 2:9"],
+      "userNoteLabel": "Note:",
+      "authorNote": ["The wicked do not go to hell or purgatory at death. The same law of death applies to all who die. They do not know anything. God reserves the unjust unto the day judgment to be punished."]
+    }
+  ]
+}
